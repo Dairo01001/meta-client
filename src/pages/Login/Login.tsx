@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useDispatch } from "react-redux";
 import { createUser } from "@/redux/states";
+import { useNavigate } from "react-router-dom";
 
 
 export const Login = () => {
@@ -26,6 +27,7 @@ export const Login = () => {
     },
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     dispatch(createUser({
@@ -35,6 +37,7 @@ export const Login = () => {
       token: "123456789",
       refreshToken: "123456789",
     }))
+    navigate("/")
   };
 
   return (

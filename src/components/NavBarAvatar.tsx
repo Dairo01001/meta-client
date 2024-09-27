@@ -7,25 +7,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AppStore } from "@/redux/store";
+import { initialsUsername } from "@/lib/utils";
+import { User as UserType } from "@/models";
+import { resetUser } from "@/redux/states";
 
 import { LogOut, User } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+export interface NavBarAvatarProps {
+  user: UserType;
+}
 
-export const NavBarAvatar = () => {
-  const user = useSelector((state: AppStore) => state.user)
+export const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
 
-  if(!user) {
-    return null
-  }
+  const dispatch = useDispatch();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="h-14 mr-20 cursor-pointer">
+        <div className="h-14 w-14 mr-20 cursor-pointer">
           <Avatar>
             <AvatarImage src={user.image} alt="Avatar" />
-            <AvatarFallback>{user.username.charAt(0)}</AvatarFallback>
+            <AvatarFallback>{initialsUsername(user.username)}</AvatarFallback>
           </Avatar>
         </div>
       </DropdownMenuTrigger>
@@ -37,7 +39,7 @@ export const NavBarAvatar = () => {
           <span>Perfil</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => console.log("Hello")}>
+        <DropdownMenuItem onClick={() => dispatch(resetUser())}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Cerrar Sesión</span>
         </DropdownMenuItem>
