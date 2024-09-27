@@ -7,22 +7,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { AppStore } from "@/redux/store";
 
 import { LogOut, User } from "lucide-react";
+import { useSelector } from "react-redux";
 
 export const NavBarAvatar = () => {
+  const user = useSelector((state: AppStore) => state.user)
+
+  if(!user) {
+    return null
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="h-14 mr-20 cursor-pointer">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>DT</AvatarFallback>
+            <AvatarImage src={user.image} alt="Avatar" />
+            <AvatarFallback>{user.username.charAt(0)}</AvatarFallback>
           </Avatar>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>Jose Daniel Toquica Agudelo</DropdownMenuLabel>
+        <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <User className="mr-2 h-4 w-4" />

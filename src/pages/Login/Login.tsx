@@ -13,6 +13,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useDispatch } from "react-redux";
+import { createUser } from "@/redux/states";
 
 
 export const Login = () => {
@@ -23,9 +25,16 @@ export const Login = () => {
       password: "",
     },
   });
+  const dispatch = useDispatch();
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
+    dispatch(createUser({
+      username: values.username,
+      image: "https://github.com/shadcn.png",
+      email: "jose@gmail.com",
+      token: "123456789",
+      refreshToken: "123456789",
+    }))
   };
 
   return (
