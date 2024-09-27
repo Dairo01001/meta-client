@@ -2,6 +2,7 @@ export * from "./Logo";
 export * from "./NavBar";
 export * from "./NavBarAvatar";
 export * from "./NavBarMenu";
+export * from "./RootLayout";
 export * from "./ThemeModeToggle";
 export * from "./ThemeProvider";
 export * from "./ui/avatar";

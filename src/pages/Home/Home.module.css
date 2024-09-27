@@ -2,4 +2,5 @@
   background-image: url("../../assets/bg-home-image.png");
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
