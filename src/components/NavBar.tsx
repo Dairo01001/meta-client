@@ -5,7 +5,7 @@ import ThemeModeToggle from "./ThemeModeToggle";
 
 export const NavBar = () => {
   return (
-    <nav className="flex items-center justify-between w-full h-20">
+    <nav className="flex items-center justify-between w-full h-20 shadow-sm">
       <Logo />
       <div className="flex items-center gap-5">
         <NavBarMenu />
