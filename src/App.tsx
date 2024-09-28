@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages";
+import { About, Home } from "./pages";
 import { RootLayout, ThemeProvider } from "./components";
 import store from "./redux/store";
 
@@ -18,6 +18,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/about" element={<About />} />
               </Routes>
             </RootLayout>
           </BrowserRouter>

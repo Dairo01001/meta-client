@@ -13,12 +13,12 @@ import { resetUser } from "@/redux/states";
 
 import { LogOut, User } from "lucide-react";
 import { useDispatch } from "react-redux";
+
 export interface NavBarAvatarProps {
   user: UserType;
 }
 
 export const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
-
   const dispatch = useDispatch();
 
   return (
