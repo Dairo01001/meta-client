@@ -15,7 +15,7 @@ export const Projects = ({ projectList }: ProjectsProps) => {
     <div className="relative w-full h-screen flex items-center justify-center">
       {/* Video de fondo */}
       <video
-        className="absolute inset-0 w-full h-full object-cover z-[-1]"
+        className="absolute inset-0 w-full h-full object-cover z-[-1] "
         autoPlay
         loop
         muted
@@ -24,9 +24,11 @@ export const Projects = ({ projectList }: ProjectsProps) => {
         Your browser does not support the video tag.
       </video>
 
+       {/* Máscara oscura sobre el video */}
+       <div className="absolute inset-0 bg-black opacity-50 z-[-1]"></div>
+
       {/* Contenedor principal para el logo y el contenido */}
       <div className="relative z-10 flex items-center justify-center mb-10 max-w-6xl mx-auto px-8">
-        {/* Logo a la izquierda */}
         <img
           src={project.hrefLogo}
           alt={`${project.title} logo`}
