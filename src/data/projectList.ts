@@ -1,0 +1,85 @@
+import { Project } from "@/types/project";
+
+export const projectList: Project[] = [
+  {
+    title: "UA3D",
+    href: "ua3d",
+    description: "A modal dialog that interrupts the user with important content and expects a response.",
+    hrefLogo: "/logo.svg",
+    longdescription: "This project focuses on developing 3D immersive technologies for the Amazon region with advanced tools.",
+    urlvisor: "https://example.com/visor-ua3d",
+    videoUrl: "/src/assets/video-ua3d.mp4",
+    colors: {
+      root: {
+        background: "0 0% 100%",
+        foreground: "0 0% 3.9%",
+        card: "0 0% 100%",
+        cardForeground: "0 0% 3.9%",
+        primary: "0 0% 9%",
+        primaryForeground: "0 0% 98%",
+      },
+      dark: {
+        background: "0 0% 3.9%",
+        foreground: "0 0% 98%",
+        card: "0 0% 3.9%",
+        cardForeground: "0 0% 98%",
+        primary: "0 0% 98%",
+        primaryForeground: "0 0% 9%",
+      },
+    },
+  },
+  {
+    title: "Laboratorio IoT",
+    href: "laboratorio-iot",
+    description: "For sighted users to preview content available behind a link.",
+    hrefLogo: "/logo-iot.svg",
+    longdescription: "Para lograr la mejor experiencia en Laboratorio IoT le recomendamos descargar el visor link, esto le permitirá mejorar la velocidad de la aplicación y obtener una experiencia significativa. Bienvenido a Laboratorio IoT. Su mejor experiencia en los procesos de enseñanza y aprendizaje.",
+    urlvisor: "https://example.com/visor-lab-iot",
+    videoUrl: "/src/assets/video-ua3d.mp4",
+    colors: {
+      root: {
+        background: "0 0% 100%",
+        foreground: "0 0% 3.9%",
+        card: "0 0% 100%",
+        cardForeground: "0 0% 3.9%",
+        primary: "0 0% 9%",
+        primaryForeground: "0 0% 98%",
+      },
+      dark: {
+        background: "0 0% 3.9%",
+        foreground: "0 0% 98%",
+        card: "0 0% 3.9%",
+        cardForeground: "0 0% 98%",
+        primary: "0 0% 98%",
+        primaryForeground: "0 0% 9%",
+      },
+    },
+  },
+  {
+    title: "Eventos",
+    href: "eventos",
+    description: "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    hrefLogo: "/logo-eventos.webp",
+    longdescription: "Este proyecto organiza y gestiona eventos en la región para fortalecer las conexiones entre diferentes entidades.",
+    urlvisor: "https://example.com/visor-eventos",
+    videoUrl: "/src/assets/video-eventos.mp4",
+    colors: {
+      root: {
+        background: "0 0% 96.1%",
+        foreground: "0 0% 9%",
+        card: "0 0% 96.1%",
+        cardForeground: "0 0% 9%",
+        primary: "0 0% 9%",
+        primaryForeground: "0 0% 98%",
+      },
+      dark: {
+        background: "0 0% 14.9%",
+        foreground: "0 0% 98%",
+        card: "0 0% 14.9%",
+        cardForeground: "0 0% 98%",
+        primary: "0 0% 98%",
+        primaryForeground: "0 0% 9%",
+      },
+    },
+  },
+];
