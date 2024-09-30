@@ -47,12 +47,12 @@ export function NavBarMenu() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link className={navigationMenuTriggerStyle()} to="/">
-            Home
+            Inicio
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link className={navigationMenuTriggerStyle()} to="/about">
-            About
+            Sobre nosotros
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
