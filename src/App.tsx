@@ -1,9 +1,12 @@
 import React, { lazy, Suspense } from "react";
+import axios from "axios";
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { About, Home } from "./pages";
 import { RootLayout, ThemeProvider } from "./components";
 import store from "./redux/store";
+
+axios.defaults.baseURL = "http://localhost:3001";
 
 const Login = lazy(() => import("@/pages/Login/Login"));
 

@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useDispatch } from "react-redux";
 import { createUser } from "@/redux/states";
 import { useNavigate } from "react-router-dom";
-
+import { loginUser } from "./services";
 
 export const Login = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -29,15 +29,16 @@ export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    dispatch(createUser({
-      username: values.username,
-      image: "https://github.com/shadcn.png",
-      email: "jose@gmail.com",
-      token: "123456789",
-      refreshToken: "123456789",
-    }))
-    navigate("/")
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    try {
+      const user = await loginUser(values.username, values.password);
+      dispatch(createUser(user));
+      navigate("/");
+    } catch (error) {
+      if (error instanceof Error) {
+        form.setError("username", { type: "manual", message: error.message });
+      }
+    }
   };
 
   return (
@@ -78,7 +79,7 @@ export const Login = () => {
             )}
           />
           <div className="w-full flex justify-center">
-            <Button size="sm" type="submit">
+            <Button size="sm" className="bg-green-600" type="submit">
               Enviar
             </Button>
           </div>
