@@ -9,6 +9,7 @@ export * from "./ThemeModeToggle";
 export * from "./ThemeProvider";
 export * from "./ui/avatar";
 export * from "./ui/button";
+export * from "./ui/calendar";
 export * from "./ui/drawer";
 export * from "./ui/dropdown-menu";
 export * from "./ui/form";

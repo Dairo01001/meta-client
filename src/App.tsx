@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import axios from "axios";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -13,7 +13,6 @@ const Profile = lazy(() => import("@/pages/Profile/Profile"));
 
 const App = () => {
   return (
-    <React.StrictMode>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Provider store={store}>
           <Suspense fallback={<h1>Loading...</h1>}>
@@ -32,7 +31,6 @@ const App = () => {
           </Suspense>
         </Provider>
       </ThemeProvider>
-    </React.StrictMode>
   );
 };
 
