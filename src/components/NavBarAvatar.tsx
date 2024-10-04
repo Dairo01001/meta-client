@@ -13,6 +13,7 @@ import { resetUser } from "@/redux/states";
 
 import { LogOut, User } from "lucide-react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export interface NavBarAvatarProps {
   user: UserType;
@@ -20,13 +21,14 @@ export interface NavBarAvatarProps {
 
 export const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="h-14 w-14 mr-20 cursor-pointer">
           <Avatar>
-            <AvatarImage src={user.image} alt="Avatar" />
+            <AvatarImage src={""} alt="Avatar" />
             <AvatarFallback>{initialsUsername(user.username)}</AvatarFallback>
           </Avatar>
         </div>
@@ -34,9 +36,9 @@ export const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/profile")}>
           <User className="mr-2 h-4 w-4" />
-          <span>Perfil</span>
+          <span>Cuenta</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => dispatch(resetUser())}>
