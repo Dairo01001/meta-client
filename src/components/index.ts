@@ -1,3 +1,4 @@
+export * from "./AdminGuard";
 export * from "./AdminLayout";
 export * from "./AdminMenu";
 export * from "./Logo";
@@ -16,3 +17,4 @@ export * from "./ui/form";
 export * from "./ui/input";
 export * from "./ui/label";
 export * from "./ui/navigation-menu";
+export * from "./ui/popover";

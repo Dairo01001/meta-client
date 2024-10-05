@@ -1,1 +1,2 @@
-export * from './EditPerson';
+export * from "./EditPerson";
+export * from "./schema";

@@ -1,3 +1,4 @@
+import { User } from "@/models";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -12,3 +13,7 @@ export function initialsUsername(username: string) {
     .join("")
     .toUpperCase();
 }
+
+export const isAdmin = (user: User) => {
+  return user.role === "ADMIN";
+};

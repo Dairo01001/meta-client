@@ -16,7 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Profile } from "../../models";
+import { IProfile } from "../../models";
 import { ProfileSchema } from "./schema";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, Edit } from "lucide-react";
@@ -24,7 +24,7 @@ import { Calendar, Input } from "@/components";
 import { useState } from "react";
 
 type EditProfileProps = {
-  profile: Profile | null;
+  profile: IProfile | null;
 };
 
 export const EditProfile = ({ profile }: EditProfileProps) => {

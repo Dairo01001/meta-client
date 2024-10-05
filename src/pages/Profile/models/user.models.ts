@@ -9,7 +9,7 @@ export interface Person {
   userId: string;
 }
 
-export interface Profile {
+export interface IProfile {
   id: number;
   birthDate: string;
   phone: string;
@@ -17,11 +17,11 @@ export interface Profile {
   userId: string;
 }
 
-export interface User {
+export interface UserProfile {
   id: string;
   role: string;
   status: string;
   username: string;
   person: Person | null;
-  profile: Profile | null;
+  profile: IProfile | null;
 }
