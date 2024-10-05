@@ -31,7 +31,7 @@ export const EditProfile = ({ profile }: EditProfileProps) => {
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      birthDate: new Date(new Date(profile?.birthDate || "")),
+      birthDate: profile?.birthDate ? new Date(profile?.birthDate) : new Date(),
       phone: profile?.phone || "",
       photo: profile?.photo || "",
     },
@@ -124,7 +124,7 @@ export const EditProfile = ({ profile }: EditProfileProps) => {
                     <FormLabel>Foto de perfil</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="https://image.com/image.png"
+                        placeholder="https://rickandmortyapi.com/api/character/avatar/2.jpeg"
                         {...field}
                       />
                     </FormControl>
@@ -142,7 +142,14 @@ export const EditProfile = ({ profile }: EditProfileProps) => {
             </form>
           </Form>
         </div>
-        <img src={profile?.photo} alt="Foto de perfil" className="h-96" />
+        <img
+          src={
+            profile?.photo ||
+            "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
+          }
+          alt="Foto de perfil"
+          className="h-96"
+        />
       </div>
     </div>
   );
