@@ -16,18 +16,21 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { IProfile } from "../../models";
+import { UserProfile } from "../../models";
 import { ProfileSchema } from "./schema";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, Edit } from "lucide-react";
 import { Calendar, Input } from "@/components";
 import { useState } from "react";
+import { upsertMe } from "../../services";
 
 type EditProfileProps = {
-  profile: IProfile | null;
+  user: UserProfile,
+  accessToken: string
 };
 
-export const EditProfile = ({ profile }: EditProfileProps) => {
+export const EditProfile = ({ user, accessToken }: EditProfileProps) => {
+  const { profile } = user;
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
@@ -40,7 +43,14 @@ export const EditProfile = ({ profile }: EditProfileProps) => {
 
   const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
     try {
-      console.log(values);
+      const upsertProfile = {
+        birthDate: values.birthDate.toISOString(),
+        phone: values.phone,
+        photo: values.photo,
+        userId: user.id,
+      };
+      console.log(upsertProfile);
+      await upsertMe(accessToken, upsertProfile);
     } catch (error) {
       console.log(error);
     }
