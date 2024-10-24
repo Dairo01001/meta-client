@@ -1,13 +1,13 @@
-import { AppStore } from "@/redux/store";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
-import { AppSidebar } from "./app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "./ui/sidebar";
+import { AppStore } from '@/redux/store'
+import { useSelector } from 'react-redux'
+import { Navigate, Outlet } from 'react-router-dom'
+import { AppSidebar } from './app-sidebar'
+import { SidebarProvider, SidebarTrigger } from './ui/sidebar'
 
 export const AdminLayout = () => {
-  const user = useSelector((state: AppStore) => state.user);
+  const user = useSelector((state: AppStore) => state.user)
 
-  if (!user.id) return <Navigate to="/login" />;
+  if (!user.id) return <Navigate to="/login" />
 
   return (
     <SidebarProvider>
@@ -17,7 +17,7 @@ export const AdminLayout = () => {
         <Outlet />
       </main>
     </SidebarProvider>
-  );
-};
+  )
+}
 
-export default AdminLayout;
+export default AdminLayout
