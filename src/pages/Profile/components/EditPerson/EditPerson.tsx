@@ -1,7 +1,4 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components";
 import {
   Form,
   FormControl,
@@ -10,11 +7,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Person } from "../../models";
 import { PersonSchema } from "./schema";
-import { useState } from "react";
-import { Edit } from "lucide-react";
-import { Input } from "@/components";
 
 type EditProfileProps = {
   person: Person | null;
@@ -31,7 +28,6 @@ export const EditPerson = ({ person }: EditProfileProps) => {
       email: person?.email || "",
     },
   });
-  const [edit, setEdit] = useState(true);
 
   const onSubmit = async (values: z.infer<typeof PersonSchema>) => {
     try {
@@ -45,7 +41,6 @@ export const EditPerson = ({ person }: EditProfileProps) => {
     <div className="col-span-12 p-4 shadow-lg">
       <p className="text-2xl font-bold text-center m-5 w-full">
         Datos Institucionales
-        <Edit onClick={() => setEdit(!edit)} className="hover:cursor-pointer" />
       </p>
       <div className="flex gap-5">
         <div className="w-full">
@@ -58,7 +53,7 @@ export const EditPerson = ({ person }: EditProfileProps) => {
                 <FormField
                   control={form.control}
                   name="firstName"
-                  disabled={edit}
+                  disabled
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Primer Nombre</FormLabel>
@@ -72,7 +67,7 @@ export const EditPerson = ({ person }: EditProfileProps) => {
                 <FormField
                   control={form.control}
                   name="secondName"
-                  disabled={edit}
+                  disabled
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Segundo Nombre</FormLabel>
@@ -88,7 +83,7 @@ export const EditPerson = ({ person }: EditProfileProps) => {
                 <FormField
                   control={form.control}
                   name="firstSurname"
-                  disabled={edit}
+                  disabled
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Primer Apellido</FormLabel>
@@ -102,7 +97,7 @@ export const EditPerson = ({ person }: EditProfileProps) => {
                 <FormField
                   control={form.control}
                   name="secondSurname"
-                  disabled={edit}
+                  disabled
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Segundo Apellido</FormLabel>
@@ -117,7 +112,7 @@ export const EditPerson = ({ person }: EditProfileProps) => {
               <FormField
                 control={form.control}
                 name="email"
-                disabled={edit}
+                disabled
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Correo Institucional</FormLabel>
@@ -128,13 +123,6 @@ export const EditPerson = ({ person }: EditProfileProps) => {
                   </FormItem>
                 )}
               />
-              {!edit ? (
-                <div className="w-full flex justify-center">
-                  <Button size="sm" className="bg-green-600" type="submit">
-                    Enviar
-                  </Button>
-                </div>
-              ) : null}
             </form>
           </Form>
         </div>

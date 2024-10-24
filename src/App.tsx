@@ -1,14 +1,14 @@
-import { lazy, Suspense } from "react";
 import axios from "axios";
+import { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { About, Home } from "./pages";
 import {
   AdminGuard,
   AdminLayout,
   RootLayout,
   ThemeProvider,
 } from "./components";
+import { About, Home } from "./pages";
 import store from "./redux/store";
 
 axios.defaults.baseURL = "http://localhost:3001";

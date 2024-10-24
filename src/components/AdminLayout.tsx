@@ -1,18 +1,22 @@
-import { Navigate, Outlet } from "react-router-dom";
-import AdminMenu from "./AdminMenu";
-import { useSelector } from "react-redux";
 import { AppStore } from "@/redux/store";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
+import { AppSidebar } from "./app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "./ui/sidebar";
 
 export const AdminLayout = () => {
   const user = useSelector((state: AppStore) => state.user);
 
-  if(!user.id) return <Navigate to="/login" />;
+  if (!user.id) return <Navigate to="/login" />;
 
   return (
-    <div className="flex-grow flex flex-row gap-2">
-      <AdminMenu />
-      <Outlet />
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        <Outlet />
+      </main>
+    </SidebarProvider>
   );
 };
 
