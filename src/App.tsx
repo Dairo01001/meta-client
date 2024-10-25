@@ -31,8 +31,10 @@ const App = () => {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/server" element={<Server />} />
               </Route>
-              <Route element={<AdminLayout />}>
-                <Route element={<AdminGuard />}></Route>
+              <Route element={<AdminGuard />}>
+                <Route element={<AdminLayout />}>
+                  <Route path="/dashboard" element={<h1>Dashboard</h1>} />
+                </Route>
               </Route>
             </Routes>
           </BrowserRouter>

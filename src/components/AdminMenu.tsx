@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
+import { User } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "./ui/navigation-menu";
-import { User } from "lucide-react";
+  navigationMenuTriggerStyle
+} from './ui/navigation-menu'
 
 export const AdminMenu = () => {
   return (
-    <div className="p-4 overflow-y-auto w-80 shadow-xl">
+    <div className="w-80 overflow-y-auto p-4 shadow-xl">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -21,7 +21,7 @@ export const AdminMenu = () => {
         </NavigationMenuList>
       </NavigationMenu>
     </div>
-  );
-};
+  )
+}
 
-export default AdminMenu;
+export default AdminMenu
