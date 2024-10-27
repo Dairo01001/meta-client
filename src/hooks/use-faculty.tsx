@@ -1,13 +1,12 @@
-import { FacultyEntity } from '@/models'
 import { getAllFaculties } from '@/services'
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 export const useFaculty = () => {
-  const [faculties, setFaculties] = useState<FacultyEntity[]>([])
+  const { isLoading, data,  } = useQuery({
+    queryFn: getAllFaculties,
+    queryKey: ['faculties'],
+  })
 
-  useEffect(() => {
-    getAllFaculties().then(setFaculties)
-  }, [])
 
-  return { faculties }
+  return { faculties: data || [], isLoading }
 }

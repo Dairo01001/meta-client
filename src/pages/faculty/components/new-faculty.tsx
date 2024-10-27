@@ -12,32 +12,36 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAppSelector, useToast } from '@/hooks'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { createFaculty } from '../services'
 
 export const NewFaculty = () => {
   const { accessToken } = useAppSelector(state => state.user)
+  const queryClient = useQueryClient()
   const [name, setName] = useState('')
   const { toast } = useToast()
 
-  const handleSubmit = async () => {
-    try {
-      await createFaculty(name, accessToken)
+  const mutation = useMutation({
+    mutationFn: createFaculty,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['faculties'] })
       setName('')
       toast({
         title: 'Facultad creada',
         description: 'La facultad ha sido creada exitosamente',
         variant: 'default'
       })
-    } catch (error) {
+    },
+    onError: () => {
       toast({
         title: 'Error al crear la facultad',
         description: 'No se ha podido crear la facultad',
         variant: 'destructive'
       })
     }
-  }
+  })
 
   return (
     <Dialog>
@@ -68,7 +72,15 @@ export const NewFaculty = () => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            onClick={() => {
+              mutation.mutate({
+                name,
+                accessToken
+              })
+            }}
+          >
             Crear
           </Button>
           <DialogClose asChild>

@@ -1,12 +1,16 @@
 import axios from 'axios'
 
-export const createFaculty = async (name: string, accessToken: string) => {
+export const createFaculty = async ({
+  name,
+  accessToken
+}: {
+  name: string
+  accessToken: string
+}) => {
   return (
     await axios.post(
       '/faculties',
-      {
-        name
-      },
+      { name },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`
