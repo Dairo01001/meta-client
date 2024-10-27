@@ -1,4 +1,10 @@
-import { BookOpen, Bot, Settings2, SquareTerminal } from 'lucide-react'
+import {
+  BookOpen,
+  Bot,
+  Settings,
+  Settings2,
+  SquareTerminal
+} from 'lucide-react'
 import * as React from 'react'
 
 import { NavMain } from '@/components/nav-main'
@@ -85,34 +91,34 @@ const data = {
     {
       title: 'Facultades',
       url: '#',
-      icon: BookOpen,
+      icon: Settings,
       items: [
         {
-          title: 'Listar',
+          title: 'Facultades',
           url: '/faculty'
+        },
+        {
+          title: 'Programas',
+          url: '/program'
         }
       ]
     },
     {
-      title: 'Settings',
+      title: 'Configuraciones',
       url: '#',
       icon: Settings2,
       items: [
         {
-          title: 'General',
-          url: '#'
+          title: 'Roles',
+          url: '/rol'
         },
         {
-          title: 'Team',
-          url: '#'
+          title: 'Estado de servidor',
+          url: '/server-status'
         },
         {
-          title: 'Billing',
-          url: '#'
-        },
-        {
-          title: 'Limits',
-          url: '#'
+          title: 'Estado de usuarios',
+          url: '/user-status'
         }
       ]
     }

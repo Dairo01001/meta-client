@@ -147,7 +147,7 @@ export function Faculty() {
                   })
                 }}
               >
-                Inavilitar
+                Cambiar estado
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link to={`/faculty/${faculty.id}`}>Ver detalles</Link>
