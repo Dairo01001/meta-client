@@ -18,8 +18,9 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { useFaculty } from '@/hooks'
+import { useAppSelector, useFaculty, useToast } from '@/hooks'
 import { FacultyEntity } from '@/models'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -34,100 +35,129 @@ import {
 } from '@tanstack/react-table'
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { NewFaculty } from './components'
-
-export const columns: ColumnDef<FacultyEntity>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={value => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false
-  },
-  {
-    accessorKey: 'status',
-    header: 'Estado',
-    cell: ({ row }) => {
-      const faculty = row.original
-      return (
-        <div className="capitalize">
-          {faculty.status ? 'Activo' : 'Inactivo'}
-        </div>
-      )
-    }
-  },
-  {
-    accessorKey: 'name',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Nombre
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      const faculty = row.original
-      return <div className="capitalize">{faculty.name}</div>
-    }
-  },
-  {
-    id: 'actions',
-    header: 'Acciones',
-    cell: ({ row }) => {
-      const faculty = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(faculty.id.toString())
-              }
-            >
-              Copiar ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    }
-  }
-]
+import { changeStateFaculty } from './services'
 
 export function Faculty() {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const { accessToken } = useAppSelector(state => state.user)
+  const queryClient = useQueryClient()
+  const { toast } = useToast()
   const { faculties } = useFaculty()
+
+  const mutation = useMutation({
+    mutationFn: changeStateFaculty,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['faculties'] })
+      toast({
+        title: 'Facultad Editada',
+        description: 'La facultad ha sido editada exitosamente',
+        variant: 'default'
+      })
+    }
+  })
+
+  const columns: ColumnDef<FacultyEntity>[] = [
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={value => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false
+    },
+    {
+      accessorKey: 'status',
+      header: 'Estado',
+      cell: ({ row }) => {
+        const faculty = row.original
+        return (
+          <div className="capitalize">
+            {faculty.status ? 'Activo' : 'Inactivo'}
+          </div>
+        )
+      }
+    },
+    {
+      accessorKey: 'name',
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Nombre
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      cell: ({ row }) => {
+        const faculty = row.original
+        return <div className="capitalize">{faculty.name}</div>
+      }
+    },
+    {
+      id: 'actions',
+      header: 'Acciones',
+      cell: ({ row }) => {
+        const faculty = row.original
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() =>
+                  navigator.clipboard.writeText(faculty.id.toString())
+                }
+              >
+                Copiar ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  mutation.mutate({
+                    id: faculty.id,
+                    status: faculty.status,
+                    accessToken
+                  })
+                }}
+              >
+                Inavilitar
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to={`/faculty/${faculty.id}`}>Ver detalles</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      }
+    }
+  ]
 
   const table = useReactTable({
     data: faculties,

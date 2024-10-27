@@ -14,7 +14,7 @@ export const AdminLayout = () => {
       <AppSidebar />
       <main className="w-full p-2">
         <SidebarTrigger />
-        <div className="flex h-full w-full items-center justify-center p-10">
+        <div className="flex h-full w-full justify-center p-10">
           <Outlet />
         </div>
         <Toaster />
