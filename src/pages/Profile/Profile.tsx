@@ -1,11 +1,10 @@
-import { AppStore } from '@/redux/store'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '@/hooks'
 import { EditPerson, EditProfile } from './components'
 import { useUserMe } from './hooks'
 
 export const Profile = () => {
   const { me } = useUserMe()
-  const { accessToken } = useSelector((state: AppStore) => state.user)
+  const { accessToken } = useAppSelector(state => state.user)
 
   if (!me) {
     return <div>Loading...</div>

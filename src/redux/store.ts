@@ -1,14 +1,11 @@
-import { User } from '@/models'
 import { configureStore } from '@reduxjs/toolkit'
+import { fullUserSlice } from './states/fullUserSlice'
 import { userSlice } from './states/userSlice'
 
-export interface AppStore {
-  user: User
-}
-
-export const store = configureStore<AppStore>({
+export const store = configureStore({
   reducer: {
-    user: userSlice.reducer
+    user: userSlice.reducer,
+    fullUser: fullUserSlice.reducer
   }
 })
 

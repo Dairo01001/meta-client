@@ -1,3 +1,5 @@
 export * from './hooks'
+export * from './use-faculty'
 export * from './use-mobile'
+export * from './use-toast'
 export * from './useTheme'
