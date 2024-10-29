@@ -1,100 +1,117 @@
 import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components'
+import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { useAppSelector } from '@/hooks'
-import { useQuery } from '@tanstack/react-query'
-import { getAllRoles } from './services'
-
-const invoices = [
-  {
-    invoice: 'INV001',
-    paymentStatus: 'Paid',
-    totalAmount: '$250.00',
-    paymentMethod: 'Credit Card'
-  },
-  {
-    invoice: 'INV002',
-    paymentStatus: 'Pending',
-    totalAmount: '$150.00',
-    paymentMethod: 'PayPal'
-  },
-  {
-    invoice: 'INV003',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$350.00',
-    paymentMethod: 'Bank Transfer'
-  },
-  {
-    invoice: 'INV004',
-    paymentStatus: 'Paid',
-    totalAmount: '$450.00',
-    paymentMethod: 'Credit Card'
-  },
-  {
-    invoice: 'INV005',
-    paymentStatus: 'Paid',
-    totalAmount: '$550.00',
-    paymentMethod: 'PayPal'
-  },
-  {
-    invoice: 'INV006',
-    paymentStatus: 'Pending',
-    totalAmount: '$200.00',
-    paymentMethod: 'Bank Transfer'
-  },
-  {
-    invoice: 'INV007',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$300.00',
-    paymentMethod: 'Credit Card'
-  }
-]
+import { useAppSelector, useToast } from '@/hooks'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { MoreHorizontal } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { NewRol } from './components/new-rol'
+import { getAllRoles, updateRole } from './services'
 
 export const Rol = () => {
   const { accessToken } = useAppSelector(state => state.user)
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
   const { data, isLoading } = useQuery({
     queryKey: ['rol'],
     queryFn: () => getAllRoles(accessToken)
   })
+  const mutation = useMutation({
+    mutationFn: updateRole,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['rol'] })
+      toast({
+        title: 'Rol editado',
+        description: 'El Rol ha sido editado exitosamente',
+        variant: 'default'
+      })
+    },
+    onError: () => {
+      toast({
+        title: 'Error al editar el Rol',
+        description: 'No se ha podido editar el Rol',
+        variant: 'destructive'
+      })
+    }
+  })
 
-  if (isLoading) return <h1>Loading...</h1>
-
-  console.log(data)
+  if (isLoading || !data) return <p>Loading...</p>
 
   return (
-    <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map(invoice => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+    <div className="w-full">
+      <div className="flex items-center py-4">
+        <NewRol />
+      </div>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Estado</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Acciones</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map(({ status, name, id }) => (
+              <TableRow key={id}>
+                <TableCell className="font-medium">
+                  {status ? 'Activo' : 'Inactivo'}
+                </TableCell>
+                <TableCell>{name}</TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          navigator.clipboard.writeText(id.toString())
+                        }
+                      >
+                        Copiar ID
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => {
+                          mutation.mutate({
+                            id,
+                            status,
+                            accessToken
+                          })
+                        }}
+                      >
+                        Cambiar estado
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link to={`/rol/${id}`}>Ver detalles</Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   )
 }
