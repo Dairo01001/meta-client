@@ -9,7 +9,7 @@ import {
   PublicLayout,
   ThemeProvider
 } from './components'
-import { About, Faculty, Home, Rol } from './pages'
+import { About, Faculty, Home, Rol, ServerStatus } from './pages'
 import store from './redux/store'
 
 axios.defaults.baseURL = 'http://localhost:3001'
@@ -40,6 +40,7 @@ const App = () => {
                     <Route path="/dashboard" element={<h1>Dashboard</h1>} />
                     <Route path="/faculty" element={<Faculty />} />
                     <Route path="/rol" element={<Rol />} />
+                    <Route path="/server-status" element={<ServerStatus />} />
                   </Route>
                 </Route>
               </Routes>
