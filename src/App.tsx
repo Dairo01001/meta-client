@@ -10,6 +10,7 @@ import {
   ThemeProvider
 } from './components'
 import { About, Faculty, Home, Rol, ServerStatus } from './pages'
+import { SignUp } from './pages/sign-up/sign-up'
 import { UserStatus } from './pages/user-status/user-status'
 import store from './redux/store'
 
@@ -31,6 +32,7 @@ const App = () => {
               <Routes>
                 <Route element={<PublicLayout />}>
                   <Route path="/" element={<Home />} />
+                  <Route path="/signup" element={<SignUp />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/profile" element={<Profile />} />

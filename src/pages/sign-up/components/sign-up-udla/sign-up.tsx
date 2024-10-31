@@ -8,31 +8,29 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { createUser } from '@/redux/states'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-import { LoginSchema } from './Schema'
-import { loginUser } from './services'
+import { SignUpUdlaSchema } from '../../schemas'
+import { SignUpTabs } from '../../sign-up'
 
-export const Login = () => {
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+interface SignUpUDLAProps {
+  setActiveTab: React.Dispatch<React.SetStateAction<SignUpTabs>>
+}
+
+export const SignUpUDLA = ({ setActiveTab }: SignUpUDLAProps) => {
+  const form = useForm<z.infer<typeof SignUpUdlaSchema>>({
+    resolver: zodResolver(SignUpUdlaSchema),
     defaultValues: {
       username: '',
       password: ''
     }
   })
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
 
-  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = async (values: z.infer<typeof SignUpUdlaSchema>) => {
     try {
-      const user = await loginUser(values.username, values.password)
-      dispatch(createUser(user))
-      navigate('/')
+      console.log(values)
+      setActiveTab('sign-up-person')
     } catch (error) {
       if (error instanceof Error) {
         form.setError('username', { type: 'manual', message: error.message })
@@ -47,16 +45,12 @@ export const Login = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full max-w-md space-y-8 rounded-lg p-10 shadow-lg"
         >
-          <div className="flex items-center justify-center">
-            <img src="/logo.svg" alt="Logo" />
-            <span className="text-2xl">Iniciar Sesión</span>
-          </div>
           <FormField
             control={form.control}
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Usuario Institucional</FormLabel>
+                <FormLabel>Usuario Chaira</FormLabel>
                 <FormControl>
                   <Input placeholder="Username" {...field} />
                 </FormControl>
@@ -77,12 +71,10 @@ export const Login = () => {
               </FormItem>
             )}
           />
-          <Link to="/signup" className="underline">
-            No tienes una cuenta? Registrate!
-          </Link>
+
           <div className="flex w-full justify-center">
             <Button size="sm" className="bg-green-600" type="submit">
-              Enviar
+              Comprovar
             </Button>
           </div>
         </form>
@@ -91,4 +83,4 @@ export const Login = () => {
   )
 }
 
-export default Login
+export default SignUpUDLA
