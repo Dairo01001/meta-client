@@ -14,3 +14,22 @@ export const createProgram = async ({ name, facultyId, accessToken }: any) => {
   )
   return response.data
 }
+
+export const updateProgram = async ({
+  id,
+  status,
+  accessToken
+}: {
+  id: number
+  status: boolean
+  accessToken: string
+}) => {
+  const response = await axios.put(
+    `/programs/${id}`,
+    { status },
+    {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    }
+  )
+  return response.data
+}

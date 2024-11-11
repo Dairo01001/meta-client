@@ -13,44 +13,34 @@ import {
   TableHeader,
   TableRow
 } from '@/components'
-import { useAppSelector, useToast } from '@/hooks'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useAppSelector } from '@/hooks'
+import { useQuery } from '@tanstack/react-query'
 import { MoreHorizontal } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import { getAllPrograms, updateProgram } from './services'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { getFaculty } from '../faculty/services'
+import { NewProgram } from '../program'
 
-export const Program = () => {
+export const FacultyDetail = () => {
+  const { id } = useParams()
   const { accessToken } = useAppSelector(state => state.user)
-  const queryClient = useQueryClient()
-  const { toast } = useToast()
-  const { data, isLoading } = useQuery({
-    queryFn: () => getAllPrograms(),
-    queryKey: ['programs']
+
+  if (!id) return <Navigate to="/faculty" />
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['facultyDetails'],
+    queryFn: () => getFaculty({ id: Number(id), accessToken })
   })
 
-  const mutation = useMutation({
-    mutationFn: updateProgram,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['programs'] })
-      toast({
-        title: 'Estado del programa actualizado',
-        description: 'El estado del programa ha sido actualizado',
-        variant: 'default'
-      })
-    },
-    onError: () => {
-      toast({
-        title: 'Error al actualizar el estado del programa',
-        description: 'No se pudo actualizar el estado del programa',
-        variant: 'destructive'
-      })
-    }
-  })
+  if (isLoading) return <p>Loading...</p>
 
-  if (isLoading || !data) return <p>Loading...</p>
+  if (error || !data) return <Navigate to="/faculty" />
 
   return (
     <div className="w-full">
+      <div className="flex items-center py-4">
+        <span className="text-xl">{data.name}</span>
+        <NewProgram facultyId={Number(id)} />
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -61,7 +51,7 @@ export const Program = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map(({ status, name, id }) => (
+            {data.programs.map(({ status, name, id }) => (
               <TableRow key={id}>
                 <TableCell className="font-medium">
                   {status ? 'Activo' : 'Inactivo'}
@@ -85,19 +75,9 @@ export const Program = () => {
                         Copiar ID
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        onClick={() => {
-                          mutation.mutate({
-                            id,
-                            status,
-                            accessToken
-                          })
-                        }}
-                      >
-                        Cambiar estado
-                      </DropdownMenuItem>
+
                       <DropdownMenuItem>
-                        <Link to={`/program/${id}`}>Ver detalles</Link>
+                        <Link to={`/server-status/${id}`}>Ver detalles</Link>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -110,3 +90,5 @@ export const Program = () => {
     </div>
   )
 }
+
+export default FacultyDetail

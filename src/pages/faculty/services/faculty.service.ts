@@ -1,4 +1,12 @@
+import { ProgramEntity } from '@/pages/program'
 import axios from 'axios'
+
+export interface FacultyDetailsEntity {
+  id: number
+  name: string
+  status: boolean
+  programs: ProgramEntity[]
+}
 
 export const createFaculty = async ({
   name,
@@ -17,6 +25,22 @@ export const createFaculty = async ({
         }
       }
     )
+  ).data
+}
+
+export const getFaculty = async ({
+  id,
+  accessToken
+}: {
+  id: number
+  accessToken: string
+}): Promise<FacultyDetailsEntity> => {
+  return (
+    await axios.get(`/faculties/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
   ).data
 }
 
