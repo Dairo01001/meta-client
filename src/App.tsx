@@ -9,9 +9,11 @@ import {
   PublicLayout,
   ThemeProvider
 } from './components'
-import { About, Faculty, Home, Rol, ServerStatus } from './pages'
+import { About, Faculty, Home, Rol } from './pages'
+import { CreateServer } from './pages/create-server'
 import { FacultyDetail } from './pages/faculty-detail'
 import { Program } from './pages/program'
+import ServerStatus from './pages/server-status/server-status'
 import { SignUp } from './pages/sign-up/sign-up'
 import { UserStatus } from './pages/user-status/user-status'
 import store from './redux/store'
@@ -43,6 +45,7 @@ const App = () => {
                 <Route element={<AdminGuard />}>
                   <Route element={<AdminLayout />}>
                     <Route path="/dashboard" element={<h1>Dashboard</h1>} />
+                    <Route path="/create-server" element={<CreateServer />} />
                     <Route path="/faculty" element={<Faculty />} />
                     <Route path="/faculty/:id" element={<FacultyDetail />} />
                     <Route path="/program" element={<Program />} />

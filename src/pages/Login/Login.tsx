@@ -58,7 +58,7 @@ export const Login = () => {
               <FormItem>
                 <FormLabel>Usuario Institucional</FormLabel>
                 <FormControl>
-                  <Input placeholder="Username" {...field} />
+                  <Input type="text" placeholder="Username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

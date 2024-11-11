@@ -27,7 +27,7 @@ const data = {
   },
   navMain: [
     {
-      title: 'Playground',
+      title: 'Terminal',
       url: '#',
       icon: SquareTerminal,
       isActive: false,
@@ -47,21 +47,17 @@ const data = {
       ]
     },
     {
-      title: 'Models',
+      title: 'Server',
       url: '#',
       icon: Bot,
       items: [
         {
-          title: 'Genesis',
-          url: '#'
+          title: 'Crear Servidor',
+          url: '/create-server'
         },
         {
-          title: 'Explorer',
-          url: '#'
-        },
-        {
-          title: 'Quantum',
-          url: '#'
+          title: 'Servidores',
+          url: '/servers'
         }
       ]
     },
@@ -89,7 +85,7 @@ const data = {
       ]
     },
     {
-      title: 'Facultades',
+      title: 'Dependencias',
       url: '#',
       icon: Settings,
       items: [

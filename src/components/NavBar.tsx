@@ -1,6 +1,5 @@
-import { AppStore } from '@/redux/store'
+import { useAppSelector } from '@/hooks'
 import { LogIn, Server } from 'lucide-react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
 import NavBarAvatar from './NavBarAvatar'
@@ -8,10 +7,10 @@ import NavBarMenu from './NavBarMenu'
 import ThemeModeToggle from './ThemeModeToggle'
 
 export const NavBar = () => {
-  const user = useSelector((state: AppStore) => state.user)
+  const user = useAppSelector(state => state.user)
 
   return (
-    <nav className="flex h-20 w-full items-center justify-between shadow-sm">
+    <nav className="flex w-full items-center justify-between shadow-sm">
       <Logo />
       <div className="flex items-center gap-5">
         <NavBarMenu />
