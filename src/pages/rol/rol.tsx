@@ -53,6 +53,8 @@ export const Rol = () => {
 
   return (
     <div className="w-full">
+      <p className="text-center text-2xl font-bold">Roles en la Aplicación</p>
+
       <div className="flex items-center py-4">
         <NewRol />
       </div>

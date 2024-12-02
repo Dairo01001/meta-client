@@ -52,6 +52,7 @@ export const ServerStatus = () => {
 
   return (
     <div className="w-full">
+      <p className="text-center text-2xl font-bold">Estado de servidores</p>
       <div className="flex items-center py-4">
         <NewServerStatus />
       </div>

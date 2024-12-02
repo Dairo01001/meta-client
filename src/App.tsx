@@ -52,6 +52,7 @@ const App = () => {
                     <Route path="/rol" element={<Rol />} />
                     <Route path="/server-status" element={<ServerStatus />} />
                     <Route path="/user-status" element={<UserStatus />} />
+                    <Route path="/servers" element={<p>Servers</p>} />
                   </Route>
                 </Route>
               </Routes>
