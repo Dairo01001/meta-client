@@ -10,6 +10,8 @@ import {
   ThemeProvider
 } from './components'
 import { About, Faculty, Home, Rol } from './pages'
+import { AdminServer } from './pages/admin-server'
+import { AdminServerDetails } from './pages/admin-server-details'
 import { CreateServer } from './pages/create-server'
 import { FacultyDetail } from './pages/faculty-detail'
 import { Program } from './pages/program'
@@ -52,7 +54,11 @@ const App = () => {
                     <Route path="/rol" element={<Rol />} />
                     <Route path="/server-status" element={<ServerStatus />} />
                     <Route path="/user-status" element={<UserStatus />} />
-                    <Route path="/servers" element={<p>Servers</p>} />
+                    <Route path="/servers" element={<AdminServer />} />
+                    <Route
+                      path="/servers/:id"
+                      element={<AdminServerDetails />}
+                    />
                   </Route>
                 </Route>
               </Routes>

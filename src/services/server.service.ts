@@ -20,3 +20,16 @@ export interface ServerEntity {
 
 export const getAllServers = async (): Promise<ServerEntity[]> =>
   (await axios.get('/servers')).data
+
+export const getServerById = async ({
+  id,
+  accessToken
+}: {
+  id: string
+  accessToken: string
+}): Promise<ServerEntity> =>
+  (
+    await axios.get(`/servers/${id}`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    })
+  ).data
