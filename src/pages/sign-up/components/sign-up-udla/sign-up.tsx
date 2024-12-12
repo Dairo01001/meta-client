@@ -8,7 +8,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useAppDispatch, useToast } from '@/hooks'
+import { useAppDispatch } from '@/hooks'
 import { modifyNewUser } from '@/redux/states'
 import { getChaira } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -33,30 +33,23 @@ export const SignUpUDLA = ({ setActiveTab }: SignUpUDLAProps) => {
   })
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { toast } = useToast()
 
   const onSubmit = async (values: z.infer<typeof SignUpUdlaSchema>) => {
     try {
       const isValid = await getChaira()
-      console.log(isValid)
 
       if (isValid === 'OK') {
         const existUser = await findUserByUsername({
           username: values.username
         })
+
         if (!existUser) {
           dispatch(modifyNewUser({ user: values }))
           setActiveTab('sign-up-person')
         } else {
-          toast({
-            title: '',
-            description: 'El usuario ya existe, intenta entrar',
-            variant: 'default'
-          })
           navigate('/login')
         }
       } else {
-        console.log('Error')
         form.setError('username', {
           type: 'manual',
           message: 'Credenciales incorrectas'

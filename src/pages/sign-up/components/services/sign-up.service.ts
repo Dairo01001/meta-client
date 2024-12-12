@@ -1,3 +1,4 @@
+import { User } from '@/models'
 import axios from 'axios'
 
 interface NewUser {
@@ -10,9 +11,17 @@ interface ExistingUser {
   username: string
 }
 
-export const createNewUser = async ({ username, password }: NewUser) => {
+export const createNewUser = async ({
+  username,
+  password
+}: NewUser): Promise<User> => {
+  await axios.post('/users', {
+    username,
+    password
+  })
+
   return (
-    await axios.post('/users', {
+    await axios.post('/auth/login', {
       username,
       password
     })

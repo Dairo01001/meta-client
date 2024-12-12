@@ -7,10 +7,14 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
+import { useAppSelector } from '@/hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { SignUpPersonSchema } from '../../schemas'
+import { FacultySelector } from '../faculty-selector'
+import { createNewUser } from '../services/sign-up.service'
 
 export const SignUpPerson = () => {
   const form = useForm<z.infer<typeof SignUpPersonSchema>>({
@@ -23,10 +27,13 @@ export const SignUpPerson = () => {
       email: ''
     }
   })
+  const newUser = useAppSelector(state => state.newUser.user)
+  const [programId, setProgramId] = useState<string>('')
 
   const onSubmit = async (values: z.infer<typeof SignUpPersonSchema>) => {
     try {
-      console.log(values)
+      const user = await createNewUser(newUser)
+      console.log(user, values)
     } catch (error) {
       console.log(error)
     }
@@ -109,6 +116,10 @@ export const SignUpPerson = () => {
                     <FormMessage />
                   </FormItem>
                 )}
+              />
+              <FacultySelector
+                programId={programId}
+                setProgramId={setProgramId}
               />
               <div className="flex w-full justify-center">
                 <Button size="sm" className="bg-green-600" type="submit">
