@@ -8,11 +8,16 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useAppDispatch, useToast } from '@/hooks'
+import { modifyNewUser } from '@/redux/states'
+import { getChaira } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { SignUpUdlaSchema } from '../../schemas'
 import { SignUpTabs } from '../../sign-up'
+import { findUserByUsername } from '../services/sign-up.service'
 
 interface SignUpUDLAProps {
   setActiveTab: React.Dispatch<React.SetStateAction<SignUpTabs>>
@@ -26,11 +31,37 @@ export const SignUpUDLA = ({ setActiveTab }: SignUpUDLAProps) => {
       password: ''
     }
   })
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const { toast } = useToast()
 
   const onSubmit = async (values: z.infer<typeof SignUpUdlaSchema>) => {
     try {
-      console.log(values)
-      setActiveTab('sign-up-person')
+      const isValid = await getChaira()
+      console.log(isValid)
+
+      if (isValid === 'OK') {
+        const existUser = await findUserByUsername({
+          username: values.username
+        })
+        if (!existUser) {
+          dispatch(modifyNewUser({ user: values }))
+          setActiveTab('sign-up-person')
+        } else {
+          toast({
+            title: '',
+            description: 'El usuario ya existe, intenta entrar',
+            variant: 'default'
+          })
+          navigate('/login')
+        }
+      } else {
+        console.log('Error')
+        form.setError('username', {
+          type: 'manual',
+          message: 'Credenciales incorrectas'
+        })
+      }
     } catch (error) {
       if (error instanceof Error) {
         form.setError('username', { type: 'manual', message: error.message })

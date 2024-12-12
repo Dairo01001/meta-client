@@ -7,8 +7,6 @@ export type SignUpTabs = 'sign-up' | 'sign-up-person'
 export const SignUp = () => {
   const [activeTab, setActiveTab] = useState<SignUpTabs>('sign-up')
 
-  console.log(activeTab)
-
   return (
     <div className="flex flex-col items-center justify-center">
       <Tabs value={activeTab} className="w-full max-w-md">
