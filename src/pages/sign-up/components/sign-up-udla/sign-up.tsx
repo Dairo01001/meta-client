@@ -8,7 +8,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useAppDispatch } from '@/hooks'
+import { useAppDispatch, useToast } from '@/hooks'
 import { modifyNewUser } from '@/redux/states'
 import { getChaira } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -33,6 +33,7 @@ export const SignUpUDLA = ({ setActiveTab }: SignUpUDLAProps) => {
   })
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { toast } = useToast()
 
   const onSubmit = async (values: z.infer<typeof SignUpUdlaSchema>) => {
     try {
@@ -48,6 +49,11 @@ export const SignUpUDLA = ({ setActiveTab }: SignUpUDLAProps) => {
           setActiveTab('sign-up-person')
         } else {
           navigate('/login')
+          toast({
+            title: 'Usuario ya existe',
+            description: 'Ingresa con tu usuario udla',
+            variant: 'default'
+          })
         }
       } else {
         form.setError('username', {

@@ -7,12 +7,14 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useToast } from '@/hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { SignUpPersonSchema } from '../../schemas'
+import { createNewPerson } from '../../services/sign-up.service'
 import { FacultySelector } from '../faculty-selector'
 import { createNewUser } from '../services/sign-up.service'
 
@@ -29,13 +31,41 @@ export const SignUpPerson = () => {
   })
   const newUser = useAppSelector(state => state.newUser.user)
   const [programId, setProgramId] = useState<string>('')
+  const { toast } = useToast()
+  const navigate = useNavigate()
 
   const onSubmit = async (values: z.infer<typeof SignUpPersonSchema>) => {
+    if (programId === '') {
+      toast({
+        title: 'Debes seleccionar un programa',
+        description: 'Debes seleccionar un programa',
+        variant: 'destructive'
+      })
+      return
+    }
     try {
       const user = await createNewUser(newUser)
-      console.log(user, values)
+      await createNewPerson({
+        firstName: values.firstName,
+        secondName: values.secondName,
+        firstSurname: values.firstSurname,
+        secondSurname: values.secondSurname,
+        email: values.email,
+        programId: Number(programId),
+        userId: user.id
+      })
+      toast({
+        title: 'Usuario creado',
+        description: 'El usuario ha sido creado',
+        variant: 'default'
+      })
+      navigate('/login')
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Error al crear usuario',
+        description: 'El usuario no ha sido creado',
+        variant: 'destructive'
+      })
     }
   }
 

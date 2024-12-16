@@ -7,7 +7,8 @@ import {
   AdminGuard,
   AdminLayout,
   PublicLayout,
-  ThemeProvider
+  ThemeProvider,
+  Toaster
 } from './components'
 import { About, Faculty, Home, Rol } from './pages'
 import { AdminServer } from './pages/admin-server'
@@ -63,6 +64,7 @@ const App = () => {
                 </Route>
               </Routes>
             </BrowserRouter>
+            <Toaster />
           </Suspense>
         </Provider>
       </QueryClientProvider>
