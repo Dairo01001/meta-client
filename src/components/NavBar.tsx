@@ -1,5 +1,5 @@
-import { useAppSelector } from '@/hooks'
 import { LogIn, Server } from 'lucide-react'
+import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
 import NavBarAvatar from './NavBarAvatar'
@@ -7,7 +7,7 @@ import NavBarMenu from './NavBarMenu'
 import ThemeModeToggle from './ThemeModeToggle'
 
 export const NavBar = () => {
-  const user = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
 
   return (
     <nav className="flex w-full items-center justify-between shadow-sm">
@@ -15,7 +15,7 @@ export const NavBar = () => {
       <div className="flex items-center gap-5">
         <NavBarMenu />
         <ThemeModeToggle />
-        {user.username ? (
+        {cookies.user?.username ? (
           <>
             <Link
               className="border-1 flex flex-row items-center rounded-lg p-4 shadow-sm hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -23,7 +23,7 @@ export const NavBar = () => {
             >
               <Server />
             </Link>
-            <NavBarAvatar user={user} />
+            <NavBarAvatar user={cookies.user} />
           </>
         ) : (
           <div className="mr-20">

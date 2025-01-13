@@ -8,10 +8,9 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { createUser } from '@/redux/states'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { LoginSchema } from './Schema'
@@ -25,13 +24,13 @@ export const Login = () => {
       password: ''
     }
   })
-  const dispatch = useDispatch()
+  const [_, setCookie] = useCookies(['user'])
   const navigate = useNavigate()
 
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     try {
       const user = await loginUser(values.username, values.password)
-      dispatch(createUser(user))
+      setCookie('user', user, { path: '/' })
       navigate('/')
     } catch (error) {
       if (error instanceof Error) {

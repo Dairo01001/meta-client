@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
 import { lazy, Suspense } from 'react'
+import { CookiesProvider } from 'react-cookie'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import {
@@ -33,40 +34,42 @@ const App = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <Suspense fallback={<h1>Loading...</h1>}>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<PublicLayout />}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/server" element={<Server />} />
-                </Route>
-                <Route element={<AdminGuard />}>
-                  <Route element={<AdminLayout />}>
-                    <Route path="/dashboard" element={<h1>Dashboard</h1>} />
-                    <Route path="/create-server" element={<CreateServer />} />
-                    <Route path="/faculty" element={<Faculty />} />
-                    <Route path="/faculty/:id" element={<FacultyDetail />} />
-                    <Route path="/program" element={<Program />} />
-                    <Route path="/rol" element={<Rol />} />
-                    <Route path="/server-status" element={<ServerStatus />} />
-                    <Route path="/user-status" element={<UserStatus />} />
-                    <Route path="/servers" element={<AdminServer />} />
-                    <Route
-                      path="/servers/:id"
-                      element={<AdminServerDetails />}
-                    />
+        <CookiesProvider>
+          <Provider store={store}>
+            <Suspense fallback={<h1>Loading...</h1>}>
+              <BrowserRouter>
+                <Routes>
+                  <Route element={<PublicLayout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/server" element={<Server />} />
                   </Route>
-                </Route>
-              </Routes>
-            </BrowserRouter>
-            <Toaster />
-          </Suspense>
-        </Provider>
+                  <Route element={<AdminGuard />}>
+                    <Route element={<AdminLayout />}>
+                      <Route path="/dashboard" element={<h1>Dashboard</h1>} />
+                      <Route path="/create-server" element={<CreateServer />} />
+                      <Route path="/faculty" element={<Faculty />} />
+                      <Route path="/faculty/:id" element={<FacultyDetail />} />
+                      <Route path="/program" element={<Program />} />
+                      <Route path="/rol" element={<Rol />} />
+                      <Route path="/server-status" element={<ServerStatus />} />
+                      <Route path="/user-status" element={<UserStatus />} />
+                      <Route path="/servers" element={<AdminServer />} />
+                      <Route
+                        path="/servers/:id"
+                        element={<AdminServerDetails />}
+                      />
+                    </Route>
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+              <Toaster />
+            </Suspense>
+          </Provider>
+        </CookiesProvider>
       </QueryClientProvider>
     </ThemeProvider>
   )

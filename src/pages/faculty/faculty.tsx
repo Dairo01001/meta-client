@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { useAppSelector, useFaculty, useToast } from '@/hooks'
+import { useFaculty, useToast } from '@/hooks'
 import { FacultyEntity } from '@/models'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
@@ -35,6 +35,7 @@ import {
 } from '@tanstack/react-table'
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react'
 import { useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import { NewFaculty } from './components'
 import { changeStateFaculty } from './services'
@@ -44,7 +45,8 @@ export function Faculty() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
   const queryClient = useQueryClient()
   const { toast } = useToast()
   const { faculties } = useFaculty()

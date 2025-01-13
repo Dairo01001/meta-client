@@ -1,12 +1,11 @@
 import { isAdmin } from '@/lib/utils'
-import { AppStore } from '@/redux/store'
-import { useSelector } from 'react-redux'
+import { useCookies } from 'react-cookie'
 import { Navigate, Outlet } from 'react-router-dom'
 
 export const AdminGuard = () => {
-  const user = useSelector((state: AppStore) => state.user)
+  const [cookies] = useCookies(['user'])
 
-  return isAdmin(user) ? <Outlet /> : <Navigate to="/" />
+  return isAdmin(cookies.user) ? <Outlet /> : <Navigate to="/" />
 }
 
 export default AdminGuard

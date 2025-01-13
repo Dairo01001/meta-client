@@ -13,15 +13,17 @@ import {
   TableHeader,
   TableRow
 } from '@/components'
-import { useAppSelector, useToast } from '@/hooks'
+import { useToast } from '@/hooks'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { MoreHorizontal } from 'lucide-react'
+import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import { NewUserStatus } from './components'
 import { getAllUserStatus, updateUserStatus } from './services'
 
 export const UserStatus = () => {
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
   const queryClient = useQueryClient()
   const { toast } = useToast()
   const { data, isLoading } = useQuery({

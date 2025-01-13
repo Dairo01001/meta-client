@@ -14,6 +14,7 @@ export function initialsUsername(username: string) {
     .toUpperCase()
 }
 
-export const isAdmin = (user: User) => {
+export const isAdmin = (user: User | null) => {
+  if (!user) return false
   return user.role === 'ADMIN'
 }

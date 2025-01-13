@@ -15,15 +15,17 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { useAppSelector, useToast } from '@/hooks'
+import { useToast } from '@/hooks'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { MoreHorizontal } from 'lucide-react'
+import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import { NewRol } from './components/new-rol'
 import { getAllRoles, updateRole } from './services'
 
 export const Rol = () => {
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
   const { toast } = useToast()
   const queryClient = useQueryClient()
   const { data, isLoading } = useQuery({

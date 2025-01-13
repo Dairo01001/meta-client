@@ -1,12 +1,11 @@
-import { useAppSelector } from '@/hooks'
+import { useCookies } from 'react-cookie'
 import { Navigate, Outlet } from 'react-router-dom'
 import { AppSidebar } from './app-sidebar'
 import { SidebarProvider, SidebarTrigger } from './ui/sidebar'
 
 export const AdminLayout = () => {
-  const user = useAppSelector(state => state.user)
-
-  if (!user.id) return <Navigate to="/login" />
+  const [cookies] = useCookies(['user'])
+  if (!cookies.user.id) return <Navigate to="/login" />
 
   return (
     <SidebarProvider>
