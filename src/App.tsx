@@ -27,6 +27,8 @@ axios.defaults.baseURL = 'http://localhost:3001'
 const Login = lazy(() => import('@/pages/Login/Login'))
 const Profile = lazy(() => import('@/pages/Profile/Profile'))
 const Server = lazy(() => import('@/pages/Server/Server'))
+const Ua3d = lazy(() => import('@/pages/projects/ua3d/ua3d'))
+const LabIot = lazy(() => import('@/pages/projects/lab-iot/lab-iot'))
 
 const App = () => {
   const queryClient = new QueryClient()
@@ -46,6 +48,8 @@ const App = () => {
                     <Route path="/about" element={<About />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/server" element={<Server />} />
+                    <Route path="/ua3d" element={<Ua3d />} />
+                    <Route path="/laboratorio-iot" element={<LabIot />} />
                   </Route>
                   <Route element={<AdminGuard />}>
                     <Route element={<AdminLayout />}>
