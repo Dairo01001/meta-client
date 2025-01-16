@@ -19,7 +19,7 @@ export const LabIot = () => {
           Adéntrate en el entorno virtual Uniamazonia 3D donde podrás recorrer
           diferentes monumentos de nuestra region
         </p>
-        <Button className="text-1xl h-11 bg-blue-400 pt-3 text-white">
+        <Button className="text-1xl bg-blue-400 pt-3 text-white">
           Descargar
         </Button>
       </div>

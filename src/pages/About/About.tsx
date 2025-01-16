@@ -30,6 +30,11 @@ const owners: CardProps[] = [
     image: '/owners/millan.png',
     title: 'Arquitecto de Software',
     fullName: 'Edwin Eduardo Millán Rojas'
+  },
+  {
+    image: '/owners/janer.jpeg',
+    title: 'Presidente de la Universidad',
+    fullName: 'Janer Edmundo Gonzales'
   }
 ]
 
