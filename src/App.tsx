@@ -50,6 +50,8 @@ const App = () => {
                     <Route path="/server" element={<Server />} />
                     <Route path="/ua3d" element={<Ua3d />} />
                     <Route path="/laboratorio-iot" element={<LabIot />} />
+                    <Route path="/zogui" element={<h1>Zogui</h1>} />
+                    <Route path="/labe" element={<h1>Labe</h1>} />
                   </Route>
                   <Route element={<AdminGuard />}>
                     <Route element={<AdminLayout />}>

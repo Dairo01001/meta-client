@@ -1,17 +1,30 @@
 import { LogIn, Server } from 'lucide-react'
 import { useCookies } from 'react-cookie'
-import { Link } from 'react-router-dom'
-import Logo from './Logo'
+import { Link, useLocation } from 'react-router-dom'
+import LogoUA3D from './LogoUA3D'
 import NavBarAvatar from './NavBarAvatar'
 import NavBarMenu from './NavBarMenu'
 import ThemeModeToggle from './ThemeModeToggle'
+import { LogoLab } from './logo-lab'
+import { LogoLabe } from './logo-labe'
+import { LogoZogui } from './logo-zogui'
 
 export const NavBar = () => {
   const [cookies] = useCookies(['user'])
+  const location = useLocation()
+  console.log(location.pathname)
 
   return (
     <nav className="flex w-full items-center justify-between shadow-sm">
-      <Logo />
+      {location.pathname.includes('laboratorio-iot') ? (
+        <LogoLab />
+      ) : location.pathname.includes('zogui') ? (
+        <LogoZogui />
+      ) : location.pathname.includes('labe') ? (
+        <LogoLabe />
+      ) : (
+        <LogoUA3D />
+      )}
       <div className="flex items-center gap-5">
         <NavBarMenu />
         <ThemeModeToggle />
