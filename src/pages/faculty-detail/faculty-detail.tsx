@@ -13,16 +13,17 @@ import {
   TableHeader,
   TableRow
 } from '@/components'
-import { useAppSelector } from '@/hooks'
 import { useQuery } from '@tanstack/react-query'
 import { MoreHorizontal } from 'lucide-react'
+import { useCookies } from 'react-cookie'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { getFaculty } from '../faculty/services'
 import { NewProgram } from '../program'
 
 export const FacultyDetail = () => {
   const { id } = useParams()
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookie] = useCookies(['user'])
+  const { accessToken } = cookie.user
 
   if (!id) return <Navigate to="/faculty" />
 

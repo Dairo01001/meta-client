@@ -12,10 +12,9 @@ import { LogoZogui } from './logo-zogui'
 export const NavBar = () => {
   const [cookies] = useCookies(['user'])
   const location = useLocation()
-  console.log(location.pathname)
 
   return (
-    <nav className="flex w-full items-center justify-between shadow-sm">
+    <nav className="flex w-full items-center justify-between bg-primary-foreground shadow-sm">
       {location.pathname.includes('laboratorio-iot') ? (
         <LogoLab />
       ) : location.pathname.includes('zogui') ? (

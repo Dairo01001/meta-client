@@ -30,6 +30,8 @@ const Profile = lazy(() => import('@/pages/Profile/Profile'))
 const Server = lazy(() => import('@/pages/Server/Server'))
 const Ua3d = lazy(() => import('@/pages/projects/ua3d/ua3d'))
 const LabIot = lazy(() => import('@/pages/projects/lab-iot/lab-iot'))
+const Zogui = lazy(() => import('@/pages/projects/zogui/zogui'))
+const Labe = lazy(() => import('@/pages/projects/labe/labe'))
 
 const App = () => {
   const queryClient = new QueryClient()
@@ -51,8 +53,8 @@ const App = () => {
                     <Route path="/server" element={<Server />} />
                     <Route path="/ua3d" element={<Ua3d />} />
                     <Route path="/laboratorio-iot" element={<LabIot />} />
-                    <Route path="/zogui" element={<h1>Zogui</h1>} />
-                    <Route path="/labe" element={<h1>Labe</h1>} />
+                    <Route path="/zogui" element={<Zogui />} />
+                    <Route path="/labe" element={<Labe />} />
                   </Route>
                   <Route element={<AdminGuard />}>
                     <Route element={<AdminLayout />}>

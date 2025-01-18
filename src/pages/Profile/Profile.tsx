@@ -1,11 +1,11 @@
-import { useAppSelector } from '@/hooks'
+import { useCookies } from 'react-cookie'
 import { EditPerson, EditProfile } from './components'
 import { useUserMe } from './hooks'
 
 export const Profile = () => {
   const { me } = useUserMe()
-  const { accessToken } = useAppSelector(state => state.user)
-
+  const [cookie] = useCookies(['user'])
+  const { accessToken } = cookie.user
   if (!me) {
     return <div>Loading...</div>
   }

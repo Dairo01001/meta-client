@@ -9,9 +9,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { initialsUsername, isAdmin } from '@/lib/utils'
 import { User as UserType } from '@/models'
-import { resetUser } from '@/redux/states'
 import { LogOut, SlidersVertical, User } from 'lucide-react'
-import { useDispatch } from 'react-redux'
+import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
 export interface NavBarAvatarProps {
@@ -19,8 +18,8 @@ export interface NavBarAvatarProps {
 }
 
 export const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [_, __, removeCookie] = useCookies(['user'])
 
   return (
     <DropdownMenu>
@@ -33,7 +32,9 @@ export const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-center">
+          {user.username.toUpperCase()}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigate('/profile')}>
           <User className="mr-2 h-4 w-4" />
@@ -49,7 +50,7 @@ export const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
             <DropdownMenuSeparator />
           </>
         )}
-        <DropdownMenuItem onClick={() => dispatch(resetUser())}>
+        <DropdownMenuItem onClick={() => removeCookie('user')}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Cerrar Sesión</span>
         </DropdownMenuItem>

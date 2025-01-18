@@ -22,29 +22,29 @@ const components: {
     title: 'UA3D',
     href: '/ua3d',
     description:
-      'A modal dialog that interrupts the user with important content and expects a response.',
-    hrefLogo: '/logo-ua3d.svg'
+      'Vive una experiencia única de aprendizaje inmersivo en nuestro campus virtual.',
+    hrefLogo: '/logo.svg'
   },
   {
     title: 'Laboratorio IoT',
     href: 'laboratorio-iot',
     description:
       'For sighted users to preview content available behind a link.',
-    hrefLogo: '/logo-laboratorio-iot.svg'
+    hrefLogo: '/logos/lab-iot-logo.png'
   },
   {
     title: 'Gestor de eventos Zogui',
     href: '/zogui',
     description:
       'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
-    hrefLogo: '/logo-eventos.svg'
+    hrefLogo: '/logos/zogui-logo.png'
   },
   {
     title: 'Labe',
     href: '/labe',
     description:
       'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
-    hrefLogo: '/logo-eventos.svg'
+    hrefLogo: '/logos/labe-logo.png'
   }
 ]
 
@@ -72,6 +72,7 @@ export function NavBarMenu() {
                   key={component.title}
                   title={component.title}
                   href={component.href}
+                  hrefLogo={component.hrefLogo}
                 >
                   {component.description}
                 </ListItem>
@@ -87,7 +88,7 @@ export function NavBarMenu() {
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
   React.ComponentPropsWithoutRef<'a'>
->(({ className, title, children, href, ...props }, ref) => {
+>(({ className, title, children, href, hrefLogo, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -100,7 +101,7 @@ const ListItem = React.forwardRef<
           to={href || ''}
           {...props}
         >
-          <img src="/logo.svg" alt="Logo" />
+          <img src={hrefLogo} alt={title} />
           <div>
             <div className="pb-1 text-center text-sm font-medium leading-none">
               {title}
@@ -114,6 +115,7 @@ const ListItem = React.forwardRef<
     </li>
   )
 })
+
 ListItem.displayName = 'ListItem'
 
 export default NavBarMenu
