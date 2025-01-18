@@ -11,10 +11,11 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useAppSelector, useToast } from '@/hooks'
+import { useToast } from '@/hooks'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { createProgram } from '../services'
 
 interface NewProgramProps {
@@ -22,7 +23,8 @@ interface NewProgramProps {
 }
 
 export const NewProgram = ({ facultyId }: NewProgramProps) => {
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
   const queryClient = useQueryClient()
   const [name, setName] = useState('')
   const { toast } = useToast()

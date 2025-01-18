@@ -6,12 +6,13 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { useAppSelector } from '@/hooks'
 import { getServerStatus } from '@/services'
 import { useQuery } from '@tanstack/react-query'
+import { useCookies } from 'react-cookie'
 
 export function ServerStatusSelect() {
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
   const { data, isLoading } = useQuery({
     queryFn: () => getServerStatus({ accessToken }),
     queryKey: ['server-status-active']

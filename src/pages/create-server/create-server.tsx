@@ -8,9 +8,10 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useAppSelector, useToast } from '@/hooks'
+import { useToast } from '@/hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
+import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { CreateServerSchema } from './schemas'
@@ -30,7 +31,8 @@ export const CreateServer = () => {
       dataBasePassword: ''
     }
   })
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
   const { toast } = useToast()
 
   const mutation = useMutation({

@@ -22,7 +22,8 @@ import { SignUp } from './pages/sign-up/sign-up'
 import { UserStatus } from './pages/user-status/user-status'
 import store from './redux/store'
 
-axios.defaults.baseURL = 'http://localhost:3001'
+axios.defaults.baseURL =
+  import.meta.env.VITE_BACK_URL ?? 'http://localhost:3001'
 
 const Login = lazy(() => import('@/pages/Login/Login'))
 const Profile = lazy(() => import('@/pages/Profile/Profile'))

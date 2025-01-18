@@ -1,11 +1,12 @@
 import { getServerById } from '@/services'
 import { useQuery } from '@tanstack/react-query'
+import { useCookies } from 'react-cookie'
 import { useParams } from 'react-router-dom'
-import { useAppSelector } from './hooks'
 
 export const useServer = () => {
   const { id } = useParams()
-  const accessToken = useAppSelector(state => state.user.accessToken)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
 
   return useQuery({
     queryKey: ['server', id],

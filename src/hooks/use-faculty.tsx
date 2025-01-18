@@ -1,9 +1,10 @@
 import { getAllFaculties } from '@/services'
 import { useQuery } from '@tanstack/react-query'
-import { useAppSelector } from './hooks'
+import { useCookies } from 'react-cookie'
 
 export const useFaculty = () => {
-  const { accessToken } = useAppSelector(state => state.user)
+  const [cookies] = useCookies(['user'])
+  const { accessToken } = cookies.user
 
   const { isLoading, data } = useQuery({
     queryFn: () => getAllFaculties(accessToken),
