@@ -1,10 +1,4 @@
-import {
-  BookOpen,
-  Bot,
-  Settings,
-  Settings2,
-  SquareTerminal
-} from 'lucide-react'
+import { Bot, Settings, Settings2, SquareTerminal } from 'lucide-react'
 import * as React from 'react'
 
 import { NavMain } from '@/components/nav-main'
@@ -20,11 +14,6 @@ import {
 import { useAppSelector } from '@/hooks'
 
 const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg'
-  },
   navMain: [
     {
       title: 'Terminal',
@@ -58,29 +47,6 @@ const data = {
         {
           title: 'Servidores',
           url: '/servers'
-        }
-      ]
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#'
-        },
-        {
-          title: 'Get Started',
-          url: '#'
-        },
-        {
-          title: 'Tutorials',
-          url: '#'
-        },
-        {
-          title: 'Changelog',
-          url: '#'
         }
       ]
     },
